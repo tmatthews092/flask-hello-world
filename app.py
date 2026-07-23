@@ -75,6 +75,38 @@ def inserting():
             conn.close()
     return "Basketball Table Populated"
 
+@app.route('/db_select')
+def selecting():
+    records = []
+    try:
+        conn = psycopg2.connect(DATABASE_URL)
+        cur = conn.cursor()
+        cur.execute('''
+            SELECT * FROM Basketball
+        ''')
+        records = cur.fetchall()
+    except Exception as e:
+        if conn is not None:
+            conn.rollback()
+        return f"Database error: {e}"
+    finally:
+        if cur is not None:
+            cur.close()
+        if conn is not None:
+            conn.close()
+    response_string = ""
+    if len(records):
+        response_string += "<table>"
+        for player in records:
+            response_string += "<tr>"
+            for info in player:
+                response_string += "<td>{}</td>".format(info)
+            response_string += "</tr>"
+        response_string += "</table>"
+    else:
+        response_string = "No records found"
+    return response_string
+
 
 # conn = None
 # cur = None
