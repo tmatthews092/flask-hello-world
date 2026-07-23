@@ -7,7 +7,7 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 
 @app.route("/")
 def index():
-    return "Hello World from YOUR NAME in 3308"
+    return "Hello World from Theodore Matthews in 3308"
 
 @app.route("/db_test")
 def db_test():
