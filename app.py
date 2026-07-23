@@ -10,6 +10,19 @@ conn = psycopg2.connect(DATABASE_URL)
 def index():
     return "Hello World from YOUR NAME in 3308"
 
+@app.route("/db_test")
+def db_test():
+    conn = None
+    try:
+        conn = psycopg2.connect(DATABASE_URL)
+        return "Database connection successful"
+    except Exception as e:
+        return f"Database connection failed: {e}"
+    finally:
+        if conn is not None:
+            conn.close()
+
+
 # conn = None
 # cur = None
 # try:
