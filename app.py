@@ -25,6 +25,7 @@ def db_test():
 @app.route("/db_create")
 def db_create():
     conn = None
+    cur = None
     try:
         conn = psycopg2.connect(DATABASE_URL)
         cur = conn.cursor()
@@ -51,6 +52,8 @@ def db_create():
 
 @app.route('/db_insert')
 def inserting():
+    conn = None
+    cur = None
     try:
         conn = psycopg2.connect(DATABASE_URL)
         cur = conn.cursor()
@@ -78,6 +81,8 @@ def inserting():
 @app.route('/db_select')
 def selecting():
     records = []
+    conn = None
+    cur = None
     try:
         conn = psycopg2.connect(DATABASE_URL)
         cur = conn.cursor()
@@ -109,11 +114,13 @@ def selecting():
 
 @app.route('/db_drop')
 def dropping():
+    conn = None
+    cur = None
     try:
         conn = psycopg2.connect(DATABASE_URL)
         cur = conn.cursor()
         cur.execute('''
-            DROP TABLE Basketball            
+            DROP TABLE IF EXISTS Basketball            
         ''')
         conn.commit()
     except Exception as e:
